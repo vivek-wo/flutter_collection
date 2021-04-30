@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(home: RouteMain()));
+  runApp(MaterialApp(home: RouteMain(), routes: {
+    'route_c': (context) => RouteC(),
+    'route_d': (context) => RouteD()
+  }));
 }
 
 class RouteMain extends StatefulWidget {
@@ -12,7 +15,7 @@ class RouteMain extends StatefulWidget {
 }
 
 class RouteMainState extends State<RouteMain> {
-  var s;
+  var s = '';
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class RouteMainState extends State<RouteMain> {
           children: [
             Padding(
                 padding: EdgeInsets.only(top: 32, bottom: 32),
-                child: Center(child: Text('Route And Navigator ' + s))),
+                child: Center(child: Text('Route And Navigator $s'))),
             Container(
                 padding: EdgeInsets.only(left: 16, right: 16),
                 margin: EdgeInsets.only(bottom: 20),
@@ -41,6 +44,7 @@ class RouteMainState extends State<RouteMain> {
                 height: 48),
             Container(
                 padding: EdgeInsets.only(left: 16, right: 16),
+                margin: EdgeInsets.only(bottom: 20),
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -50,6 +54,30 @@ class RouteMainState extends State<RouteMain> {
                                   RouteB(s: '传参：BB')));
                     },
                     child: Text('跳转带参数')),
+                width: double.infinity,
+                height: 48),
+            Container(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                margin: EdgeInsets.only(bottom: 20),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'route_c')
+                          .then((value) => this.setState(() {
+                                s = value;
+                              }));
+                    },
+                    child: Text('注册路由')),
+                width: double.infinity,
+                height: 48),
+            Container(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                margin: EdgeInsets.only(bottom: 20),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'route_d',
+                          arguments: '传参DD');
+                    },
+                    child: Text('注册路由带参数')),
                 width: double.infinity,
                 height: 48)
           ],
@@ -98,7 +126,58 @@ class RouteB extends StatelessWidget {
           children: [
             Padding(
                 padding: EdgeInsets.only(top: 32, bottom: 32),
-                child: Center(child: Text('Route B ' + s))),
+                child: Center(child: Text('Route B $s'))),
+            Container(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                margin: EdgeInsets.only(bottom: 20),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('返回')),
+                width: double.infinity,
+                height: 48),
+          ],
+        ));
+  }
+}
+
+class RouteC extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Route Navigator Demo')),
+        body: Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(top: 32, bottom: 32),
+                child: Center(child: Text('Route C'))),
+            Container(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                margin: EdgeInsets.only(bottom: 20),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context,'返回 C Main');
+                    },
+                    child: Text('返回带参')),
+                width: double.infinity,
+                height: 48),
+          ],
+        ));
+  }
+}
+
+class RouteD extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    String msg = ModalRoute.of(context).settings.arguments as String;
+    return Scaffold(
+        appBar: AppBar(title: Text('Route Navigator Demo')),
+        body: Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(top: 32, bottom: 32),
+                child: Center(child: Text('Route D $msg'))),
             Container(
                 padding: EdgeInsets.only(left: 16, right: 16),
                 margin: EdgeInsets.only(bottom: 20),
