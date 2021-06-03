@@ -25,7 +25,9 @@ class RouteMainState extends State<RouteMain> {
           children: [
             Padding(
                 padding: EdgeInsets.only(top: 32, bottom: 32),
-                child: Center(child: Text('Route And Navigator $s'))),
+                child: Center(
+                    child: Text('Route And Navigator $s',
+                        style: TextStyle(color: Colors.blue, fontSize: 24)))),
             Container(
                 padding: EdgeInsets.only(left: 16, right: 16),
                 margin: EdgeInsets.only(bottom: 20),
@@ -39,7 +41,12 @@ class RouteMainState extends State<RouteMain> {
                                 s = value;
                               }));
                     },
-                    child: Text('跳转')),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.green),
+                      shape: MaterialStateProperty.all(BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))), //圆角弧度
+                    ),
+                    child: Text('跳转', style: TextStyle(color: Colors.amber))),
                 width: double.infinity,
                 height: 48),
             Container(
@@ -157,7 +164,7 @@ class RouteC extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: 20),
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context,'返回 C Main');
+                      Navigator.pop(context, '返回 C Main');
                     },
                     child: Text('返回带参')),
                 width: double.infinity,
@@ -192,3 +199,5 @@ class RouteD extends StatelessWidget {
         ));
   }
 }
+
+
